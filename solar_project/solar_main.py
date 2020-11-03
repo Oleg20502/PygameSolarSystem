@@ -136,6 +136,7 @@ def main():
     global timer
 
     print('Modelling started!')
+    time.sleep(1)
     physical_time = 0
 
     pg.init()

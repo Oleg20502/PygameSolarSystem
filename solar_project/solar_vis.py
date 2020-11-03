@@ -44,7 +44,7 @@ def scale_x(x):
     **x** — x-координата модели.
     """
 
-    return int(x*scale_factor) + window_width//2
+    return int(x*scale_factor)
 
 
 def scale_y(y):
@@ -59,7 +59,7 @@ def scale_y(y):
     **y** — y-координата модели.
     """
 
-    return int(-y*scale_factor) + window_height//2
+    return int(-y*scale_factor)
 
 
 if __name__ == "__main__":
@@ -76,8 +76,8 @@ class Drawer:
         for figure in figures:
             figure.drawOn(self.screen)
         
-        ui.blit()
-        ui.update()
+        pg.blit()
+        pg.update()
         pg.display.update()
 
 
