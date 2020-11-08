@@ -144,7 +144,7 @@ def main():
     pg.init()
     
     width = 1000
-    height = 900
+    height = 800
     screen = pg.display.set_mode((width, height))
     last_time = time.perf_counter()
     drawer = Drawer(screen)
@@ -161,6 +161,7 @@ def main():
 
         last_time = cur_time
         drawer.update(space_objects, box)
+        pg.display.update()
         time.sleep(1.0 / 60)
 
     print('Modelling finished!')

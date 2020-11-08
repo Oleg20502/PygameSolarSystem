@@ -29,7 +29,7 @@ scale_factor = 1
 def calculate_scale_factor(max_distance):
     """Вычисляет значение глобальной переменной **scale_factor** по данной характерной длине"""
     global scale_factor
-    scale_factor = max(window_height, window_width)/max_distance
+    scale_factor = 0.5*min(window_height, window_width)/max_distance
     print('Scale factor:', scale_factor)
 
 
@@ -43,8 +43,8 @@ def scale_x(x):
 
     **x** — x-координата модели.
     """
-    print(x * scale_factor)
-    return int(x * scale_factor)
+    #print(x * scale_factor)
+    return int(x * scale_factor + window_width/4)
 
 
 def scale_y(y):
@@ -58,8 +58,8 @@ def scale_y(y):
 
     **y** — y-координата модели.
     """
-    print(y * scale_factor)
-    return int(-y * scale_factor)
+    #print(y * scale_factor)
+    return int(y * scale_factor + window_height/4)
 
 
 if __name__ == "__main__":
@@ -74,7 +74,6 @@ class Drawer:
         self.screen.fill((0, 0, 0))
         for figure in figures:
             figure.drawOn(self.screen)
-        
         ui.blit()
         ui.update()
         pg.display.update()
