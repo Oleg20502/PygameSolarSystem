@@ -32,13 +32,14 @@ def move_space_object(body, dt):
 
     **body** — тело, которое нужно переместить.
     """
-    old = body.x
+    #old = body.x
     ax = body.Fx/body.m
     body.x += body.Vx*dt + ax*dt**2/2
     body.Vx += ax*dt
     ay = body.Fy/body.m
     body.y += body.Vy*dt + ay*dt**2/2
     body.Vy += ay*dt
+    return (body.x, body.y)
 
 
 def recalculate_space_objects_positions(space_objects, dt):
@@ -50,11 +51,12 @@ def recalculate_space_objects_positions(space_objects, dt):
 
     **dt** — шаг по времени
     """
+    c = 0
     for body in space_objects:
         calculate_force(body, space_objects)
     for body in space_objects:
-        move_space_object(body, dt)
-
+        c = move_space_object(body, dt)
+    return c
 
 if __name__ == "__main__":
     print("This module is not for direct call!")

@@ -1,6 +1,6 @@
 # coding: utf-8
 # license: GPLv3
-
+import pygame as pg
 from solar_objects import SkyObject
 from solar_vis import DrawableObject
 
@@ -21,7 +21,6 @@ def read_space_objects_data_from_file(input_filename):
             skyobject = SkyObject()
             parse_sky_object_parameters(line, skyobject)
             objects.append(skyobject)
-
     return [DrawableObject(obj) for obj in objects]
 
 
@@ -41,14 +40,14 @@ def parse_sky_object_parameters(line, sky_object):
 
     Параметры:
 
-    **line** — строка с описание планеты.
+    **line** — строка с описанием планеты.
 
     **sky_object** — объект планеты.
     """
     tokens = line.split()
     assert(len(tokens) == 8)
     sky_object.R = int(tokens[1])
-    sky_object.color = tokens[2]
+    sky_object.color = pg.color.THECOLORS[tokens[2]]
     sky_object.m = float(tokens[3])
     sky_object.x = float(tokens[4])
     sky_object.y = float(tokens[5])
@@ -75,7 +74,6 @@ def write_space_objects_data_to_file(output_filename, space_objects):
         for obj in space_objects:
             print(out_file, "%s %d %s %f" % ('1', 2, '3', 4.5))
             # FIXME!
-
 
 if __name__ == "__main__":
     print("This module is not for direct call!")

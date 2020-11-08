@@ -36,9 +36,9 @@ def execution(delta):
     """
     global model_time
     global displayed_time
-    recalculate_space_objects_positions([dr.obj for dr in space_objects], delta)
+    bodies = [dr.obj for dr in space_objects]
+    coor = recalculate_space_objects_positions(bodies, delta)
     model_time += delta
-
 
 def start_execution():
     """Обработчик события нажатия на кнопку Start.
@@ -70,8 +70,10 @@ def open_file():
     model_time = 0.0
     in_filename = "solar_system.txt"
     space_objects = read_space_objects_data_from_file(in_filename)
+    #print(space_objects)
     max_distance = max([max(abs(obj.obj.x), abs(obj.obj.y)) for obj in space_objects])
     calculate_scale_factor(max_distance)
+    print(max_distance)
 
 def handle_events(events, menu):
     global alive
