@@ -35,7 +35,7 @@ def execution(delta):
     При perform_execution == True функция запрашивает вызов самой себя по таймеру через от 1 мс до 100 мс.
     """
     global model_time
-    global displayed_time
+    #global displayed_time
     bodies = [dr.obj for dr in space_objects]
     coor = recalculate_space_objects_positions(bodies, delta)
     model_time += delta
@@ -66,7 +66,9 @@ def open_file():
     global space_objects
     #global browser
     global model_time
+    global perform_execution
     global screen
+    perform_execution = True
     model_time = 0.0
     in_filename = "solar_system.txt"
     space_objects = read_space_objects_data_from_file(in_filename)
@@ -81,7 +83,7 @@ def handle_events(events, menu):
             alive = False
 
 def slider_to_real(val):
-    return np.exp(5 + val)
+    return np.exp(7 + val)
 
 def slider_reaction(event):
     global time_scale
@@ -127,7 +129,7 @@ def main():
     """
     
     global physical_time
-    global displayed_time
+    #global displayed_time
     global time_step
     global time_speed
     global screen
@@ -139,7 +141,7 @@ def main():
     print('Modelling started!')
     time.sleep(1)
     physical_time = 0
-
+    
     pg.init()
     
     width = 1000
@@ -148,21 +150,24 @@ def main():
     last_time = time.perf_counter()
     drawer = Drawer(screen)
     menu, box, timer = init_ui(screen)
-    perform_execution = True
-
+    #perform_execution = True
+    t = 0
     while alive:
         handle_events(pg.event.get(), menu)
         cur_time = time.perf_counter()
+        dt = (cur_time - last_time) * time_scale
         if perform_execution:
-            execution((cur_time - last_time) * time_scale)
+            t += 1
+            execution(dt)
             text = "%d seconds passed" % (int(model_time))
             timer.set_text(text)
 
+        if t >= 50:
+            t = 0
+            drawer.update(space_objects, box)
+            pg.display.update()
         last_time = cur_time
-        drawer.update(space_objects, box)
-        pg.display.update()
-        time.sleep(1.0 / 60)
-    pg.quit()
+        
     print('Modelling finished!')
 
 if __name__ == "__main__":
