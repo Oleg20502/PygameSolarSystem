@@ -64,16 +64,14 @@ def open_file():
     Считанные объекты сохраняются в глобальный список space_objects
     """
     global space_objects
-    global browser
+    #global browser
     global model_time
-
+    global screen
     model_time = 0.0
     in_filename = "solar_system.txt"
     space_objects = read_space_objects_data_from_file(in_filename)
-    #print(space_objects)
-    max_distance = max([max(abs(obj.obj.x), abs(obj.obj.y)) for obj in space_objects])
-    calculate_scale_factor(max_distance)
-    print(max_distance)
+    max_distance = max([max(abs(obj.obj.x), abs(obj.obj.y), 1) for obj in space_objects])
+    calculate_scale_factor(max_distance, screen)
 
 def handle_events(events, menu):
     global alive
@@ -90,7 +88,7 @@ def slider_reaction(event):
     time_scale = slider_to_real(event.el.get_value())
 
 def init_ui(screen):
-    global browser
+    #global browser
     slider = thorpy.SliderX(100, (-10, 10), "Simulation speed")
     slider.user_func = slider_reaction
     button_stop = thorpy.make_button("Quit", func=stop_execution)
@@ -125,14 +123,15 @@ def init_ui(screen):
 
 def main():
     """Главная функция главного модуля.
-    Создаёт объекты графического дизайна библиотеки tkinter: окно, холст, фрейм с кнопками, кнопки.
+    Создаёт объекты графического дизайна библиотеки pygame: окно, холст, фрейм с кнопками, кнопки.
     """
     
     global physical_time
     global displayed_time
     global time_step
     global time_speed
-    global space
+    global screen
+    #global space
     global start_button
     global perform_execution
     global timer
@@ -163,7 +162,7 @@ def main():
         drawer.update(space_objects, box)
         pg.display.update()
         time.sleep(1.0 / 60)
-
+    pg.quit()
     print('Modelling finished!')
 
 if __name__ == "__main__":
