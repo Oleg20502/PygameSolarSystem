@@ -167,7 +167,7 @@ def main():
             drawer.update(space_objects, box)
             pg.display.update()
         last_time = cur_time
-        
+    pg.quit()
     print('Modelling finished!')
 
 if __name__ == "__main__":
